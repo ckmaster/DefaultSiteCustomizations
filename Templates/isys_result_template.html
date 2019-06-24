@@ -26,185 +26,123 @@
 	function MakeLanguageFilterURL(Lang)
 		MakeLanguageFilterURL = BaseURL("") & "/search?IW_DATABASE=" & ResultID("") & "&IW_FIELD_IN_ISYSLANG=" & Lang
 	end function
-
-	function MakeSortMetaURL(MetaField)
-		Dim fullUrl
-		fullUrl = Request.ServerVariables("URL")
-		arr = Split(fullUrl, "/")
-		If UBound(arr) = 5 Then
-			character = Left(arr(3),1)
-			If (StrComp(arr(4),"sort")=0) AND (StrComp(character,"-")<>0) Then
-				MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/-" & MetaField & "/sort/"
-			Else
-				MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/" & MetaField & "/sort/"
-			End If
-		Else
-			MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/" & MetaField & "/sort/"
-		End If
-	end function
 %>
-
 <script>
-	$(function () {
-		if (window.location.hash && window.location.hash.substr(0, 9) == '#viewdoc_') {
-			var d = window.location.hash.substr(9);
-			isys.viewer.show('', '{RESULTID}', parseInt(d), 0);
-		}
-	});
+$(function() {
+	if (window.location.hash && window.location.hash.substr(0, 9) == '#viewdoc_')
+	{
+		var d = window.location.hash.substr(9);
+		isys.viewer.show('', '{RESULTID}', parseInt(d), 0);
+	}
+});
 </script>
 
 <script>
-	$(window.onload = function updateFilter_text_value() {
-		// document.getElementById("FilterForm").onsubmit = function () {
-			var index_key_id_val = document.getElementById("index_key_id");
-			var filter_text_val = document.getElementById("filter_text");
-			var new_query_val = document.getElementById("new_query");
-			new_query_val.value = filter_text_val.value + ' IN \"' + index_key_id_val.value + '\"';
-			return true;
-		// }
-	});
-</script>
-<window onload="updateFilter_text_value()"></window>
+$(function myFunction() {
+  /* Get the text field */
+  var copyText = document.getElementById("myInput");
 
-<script>
-	$(function update_sort_icon() {
-		var table = document.getElementById("result_header");
-		row = table.rows[0]
-		for (var i = 0, col; col = row.cells[i]; i++) {
-			var compareString = col.innerText.replace(" ", "%20");
-			if (window.location.href.indexOf("sort") > -1) 
-			{
-				if (window.location.href.indexOf("-" + compareString) > -1)
-				{
-					col.innerHTML += '<i class="sort descending icon" style="float: right"></i></a>';
-				}
-				else if (window.location.href.indexOf(compareString) > -1)
-				{
-					col.innerHTML += '<i class="sort ascending icon" style="float: right"></i></a>';
-				}
-			}
-		}	
-	});
+  /* Select the text field */
+  copyText.select();
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+//   alert("Copied the text: " + copyText.value);
+  return false;
+});
 </script>
 
 <!-- ISYS:Result:Header -->
 <script src="{BASEURL}/WebShared/js/isysCalendar.js"></script>
 
-<div style="width:100%; margin-top:25px; font-size:10pt; border-bottom: solid 1px #D5E3F0; height: 46px;">
-		<div style='float:right'>
-				<FORM method="POST" action="{BASEURL}/search/" id="FilterForm" name="FilterForm">
-				<div class='ui grid' style='width: 500px; height: 100%;'>
-						<div class='sixteen wide column'>
-						  <div class="ui fluid right labeled input" style='width: 100%'>
-							<input type="hidden" name="IW_DATABASE" value="{RESULTID}">
-							<input type="text" placeholder="Filter..." id='filter_text'/>
-							<input type="hidden" name="IW_FIELD_WEB_STYLE" id='new_query'/>
+<div style="width:100%; margin-top:25px; font-size:10pt; border-bottom: solid 1px #D5E3F0; height: 46px">
+	<div style='float:right'>
+		<div class="ui icon top left pointing dropdown button">
+			<i class="sort content ascending icon"></i>
+			<div class="menu">
+				<div class="header"><i class="sort icon"></i> Sort by </div>
+				<div class="item"><i class="star icon"></i> <a href='{SORTBY RELEVANCY}'>Best Match</a></div>
+				<div class="item"><i class="calendar icon"></i> <a href='{SORTBY Date}'>Date</a></div>
+				<div class="item"><i class="circle icon"></i> <a href='{SORTBY Bytes}'>Size</a></div>
+			</div>
+		</div>    
 
-							<div class="ui scrolling dropdown label">
-							  <input type="hidden" id="index_key_id"/>
-								<div class="text">{Field}</div>
-								<i class="dropdown icon"></i>
-								<div class="menu">
-									<div class='item' data-value='Field 1'>Field 1</div>
-									<div class='item' data-value='Field 2'>Field 2</div>
-									<div class='item' data-value='Field 3'>Field 3</div>
-									<div class='item' data-value='Field 4'>Field 4</div>
-									<div class='item' data-value='Field 5'>Field 5</div>
-								</div>
-							</div>
+		<div class="ui icon top left pointing dropdown button">
+			<i class="filter icon"></i>
+			<div class="menu">
+				<div class="ui left pointing dropdown item">
+					<i class="dropdown icon"></i>
 					
-							<div class="ui icon top left pointing dropdown button" style='margin-left: 3px'>
-								<i class="sort content ascending icon"></i>
-								<div class="menu">
-								  <div class="header"><i class="sort icon"></i> Sort by </div>
-								  <div class="item"><i class="star icon"></i> <a href='{SORTBY RELEVANCY}'>Best Match</a></div>
-								  <div class="item"><i class="calendar icon"></i> <a href='{SORTBY Date}'>Date</a></div>
-								  <div class="item"><i class="circle icon"></i> <a href='{SORTBY Bytes}'>Size</a></div>
-								</div>
-							</div>
-					
-							
-								<div class="ui icon top left pointing dropdown button">
-							  <i class="filter icon"></i>
-							  <div class="menu">
-								<div class="ui left pointing dropdown item">
-								  <i class="dropdown icon"></i>
-					  
-								  Date
-								  <div class="menu">
-									<div class="header"><i class="calendar icon"></i> Filter by date</div>
-									<div class="item"><a href='<%= MakeDateFilterURL(-7, "d") %>'>Last 7 days</a></div>
-									<div class="item"><a href='<%= MakeDateFilterURL(-1, "m") %>'>Last Month</a></div>
-									<div class="item"><a href='<%= MakeDateFilterURL(-3, "m") %>'>Last 3 Months</a></div>
-									<div class="item"><a href='<%= MakeDateFilterURL(-6, "m") %>'>Last 6 Months</a></div>
-									<div class="item"><a href='<%= MakeDateFilterURL(-12, "m") %>'>Last 12 Months</a></div>
-								  </div>
-								</div>
-								<div class="ui left pointing dropdown item">
-								  <i class="dropdown icon"></i>
-					  
-								  File type
-								  <div class="menu">
-									<div class="header"><i class="file text outline icon"></i> Filter by format</div>
-					  
-									<div class="item"><a href='<%= MakeFileFilterURL("*.doc*") %>'>Microsoft Word</a></div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.xls*") %>'>Microsoft Excel</a></div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.ppt*") %>'>Microsoft PowerPoint</a>
-									</div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.pdf") %>'>Adobe Acrobat</a></div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.rtf") %>'>Rich Text Format</a></div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.txt") %>'>Text Files</a></div>
-									<div class="item"><a href='<%= MakeFileFilterURL("*.htm*") %>'>HTML Files</a></div>
-								  </div>
-								</div>
-								<div class="ui left pointing dropdown item">
-								  <i class="dropdown icon"></i>
-					  
-								  Language &nbsp;
-								  <div class="menu">
-									<div class="header"><i class="comment outline icon"></i> Filter by language</div>
-					  
-									<% Langs = Split(LanguagePacks("%ID%^%NAME%;"), ";") %>
-									<% For Each Lang in Langs %>
-									<% If Lang <> "" Then %>
-									<% Parts = Split(Lang, "^") %>
-									<div class="item"><a href='<%= MakeLanguageFilterURL(Parts(0)) %>'><%= Parts(1) %></a></div>
-									<% End If %>
-									<% Next %>
-								  </div>
-								</div>
-							  </div>
-							</div>
-					
-							<div class="ui icon top left pointing dropdown button">
-								<i class="ellipsis vertical icon"></i>
-								<div class="menu">
-								  <% If ResultList.Entities.Count > 0 Then %>
-								  <div class="item" onclick='window.location="{BASEURL}/isysquery/{RESULTID}/1-10/informationmap"'><i
-									  class="sitemap icon"></i> InformationMap</div>
-								  <% End If %>
-								  <a class="item" href="{SubscribeUrl}"><i class="mail outline icon"></i> Subscribe to Search</a>
-								</div>
-							  </div>
-						</div>
-					  </div>
+					Date
+					<div class="menu">
+						<div class="header"><i class="calendar icon"></i> Filter by date</div>
+						<div class="item"><a href='<%= MakeDateFilterURL(-7, "d") %>'>Last 7 days</a></div>
+						<div class="item"><a href='<%= MakeDateFilterURL(-1, "m") %>'>Last Month</a></div>
+						<div class="item"><a href='<%= MakeDateFilterURL(-3, "m") %>'>Last 3 Months</a></div>
+						<div class="item"><a href='<%= MakeDateFilterURL(-6, "m") %>'>Last 6 Months</a></div>
+						<div class="item"><a href='<%= MakeDateFilterURL(-12, "m") %>'>Last 12 Months</a></div>
 					</div>
-				</FORM>
-		</div>
+				</div>
+				<div class="ui left pointing dropdown item">
+					<i class="dropdown icon"></i>
+					
+					File type
+					<div class="menu">
+						<div class="header"><i class="file text outline icon"></i> Filter by format</div>
 
-		<div style="margin-left: 10px; padding-bottom: 10px">
-			<div class='ui' style='padding-top: 8px'>
-				<!-- ISYS:Ajax:Stats Initial="Show" -->
-				<div id='ajaxSectionStats'>
-					Showing {#BATCHFIRST} to {#BATCHLAST} of <span id='isys_stats_docs'>{#NUMDOCS}</span> (<span id='isys_stats_hits'>{#TOTALHITS}</span> hits) &nbsp;
+						<div class="item"><a href='<%= MakeFileFilterURL("*.doc*") %>'>Microsoft Word</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.xls*") %>'>Microsoft Excel</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.ppt*") %>'>Microsoft PowerPoint</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.pdf") %>'>Adobe Acrobat</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.rtf") %>'>Rich Text Format</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.txt") %>'>Text Files</a></div>
+						<div class="item"><a href='<%= MakeFileFilterURL("*.htm*") %>'>HTML Files</a></div>
+					</div>
+				</div>	
+				<div class="ui left pointing dropdown item">
+					<i class="dropdown icon"></i>
+					
+					Language &nbsp;
+					<div class="menu">
+						<div class="header"><i class="comment outline icon"></i> Filter by language</div>
+
+						<% Langs = Split(LanguagePacks("%ID%^%NAME%;"), ";") %>
+						<% For Each Lang in Langs %>
+							<% If Lang <> "" Then %>
+							<% Parts = Split(Lang, "^") %>
+							<div class="item"><a href='<%= MakeLanguageFilterURL(Parts(0)) %>'><%= Parts(1) %></a></div>
+							<% End If %>
+						<% Next %>
+					</div>
+				</div>					
+			</div>
+		</div>
+		<div class="ui icon top left pointing dropdown button">
+			<i class="ellipsis vertical icon"></i>
+			<div class="menu">
+				<% If ResultList.Entities.Count > 0 Then %>
+				<div class="item" onclick='window.location="{BASEURL}/isysquery/{RESULTID}/1-10/informationmap"'><i class="sitemap icon"></i> InformationMap</div>
+				<% End If %>
+				<a class="item" href="{SubscribeUrl}"><i class="mail outline icon"></i> Subscribe to Search</a>
+			</div>   		
+		</div>
+	</div>
+	<div style="margin-left: 10px; padding-bottom: 10px">
+		<div class='ui' style='padding-top: 8px'>
+	<!-- ISYS:Ajax:Stats Initial="Show" -->
+			<div id='ajaxSectionStats'>
+				Showing {#BATCHFIRST} to {#BATCHLAST} of <span id='isys_stats_docs'>{#NUMDOCS}</span> (<span id='isys_stats_hits'>{#TOTALHITS}</span> hits) &nbsp;
 			</div>
 	<!-- ISYS:Ajax:End -->
 		</div>
 	</div>
 </div>
-<div>
-	{Control:FilterBar} 
-</div>
+		<div>
+			{Control:FilterBar} 
+		</div>      
+
 
 <div>
 	<% if SpellingTips <> "" then %>
@@ -213,72 +151,49 @@
 	</div>
 	<% end if %>
 
-	<table cellpadding="0" border="0" cellspacing="0" class="results-table-header" id="result_header">
-		<tr>
-			<th class="resultColumnMetaHeader">
-				Meta
-			</th>
-			<th class="resultColumnBHeader">
-				<a href='<%= MakeSortMetaURL("Field 1") %>'>Field 1</a>
-			</th>
-			<th class="resultColumnBHeader">
-				<a href='<%= MakeSortMetaURL("Field 2") %>'>Field 2</a>
-			</th>
-			<th class="resultColumnBHeader">
-				<a href='<%= MakeSortMetaURL("Field 3") %>'>Field 3</a>
-			</th>
-			<th class="resultColumnBHeader">
-				<a href='<%= MakeSortMetaURL("Field 4") %>'>Field 4</a>
-			</th>
-			<th class="resultColumnBHeader">
-				<a href='<%= MakeSortMetaURL("Field 5") %>'>Field 5</a>
-			</th>
-		</tr>
-	</table>
 
-<div>
-	<FORM method="POST" action="{BASEURL}/search/" name="SearchForm">
-		<input type="hidden" name="IW_DATABASE" value="{RESULTID}">
-		<table cellpadding="0" border="0" cellspacing="0" class="results-table">
-			<!-- ISYS:Result:Line -->
-			<tr>
-				<td class="resultColumnMeta">
-					<a href="{DOCDETAILS}">
-						<div class="ui icon">
-							<i class="info icon"></i>
-						</div>
-					</a>
-				</td>
-				<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
-					<% if METAVALUE("Field 1") <> "" then %>
-					{METAVALUE Field 1}
+<FORM method="POST" action="{BASEURL}/search/" name="SearchForm">
+	<input type="hidden" name="IW_DATABASE" value="{RESULTID}">
+	<table cellpadding="0" border="0" cellspacing="0" class="results-table">
+		<!-- ISYS:Result:Line -->
+		<tr>
+			<td class="resultColumnB" valign="top" >
+				<div style="min-width: 550px; overflow: hidden">
+				<div style="word-wrap: break-word;">{CONTROL:icon} <a href="{Control:BrowseDocInline}">{TITLE}</a> {BESTBET <font color="red" size="1">best bet!</font>}</div>
+				<div style="clear: both">
+					{SECTION name="docRelevance"}<div class="resultSummary resultStars">{RELEVANCEBAR style="stars"}</div>{SECTIONEND}
+					<div class="resultSummary resultDate"><a href="{DOCDETAILS}">{DATE dd MMM YYYY}</a></div>
+					<div class="resultSummary resultHits">{HITS} hit<%= IfThen(Document.HitCount > 1, "s", "") %></div>
+					<% if METAVALUE("onbasedocpopurl") <> "" then %>
+					<div>
+						<span style="font-size: smaller;">
+							<a href="<%= METAVALUE("onbasedocpopurl")%>" target="_blank" id="isys_var_dp_url_{DOCNUM}" style="color: green">Open Original in OnBase</a>
+						</span>
+					</div>
 					<% end if %>
-				</td>
-				<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
-					<% if METAVALUE("Field 2") <> "" then %>
-					{METAVALUE Field 2}
-					<% end if %>
-				</td>
-				<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
-					<% if METAVALUE("Field 3") <> "" then %>
-					{METAVALUE Field 3}
-					<% end if %>
-				</td>
-				<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
-					<% if METAVALUE("Field 4") <> "" then %>
-					{METAVALUE Field 4}
-					<% end if %>
-				</td>
-				<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
-					<% if METAVALUE("Field 5") <> "" then %>
-					{METAVALUE Field 5}
-					<% end if %>
-				</td>
-			</tr>
-	<!-- ISYS:Result:Footer -->
-		</table>
-	</FORM>
-</div>
+					<div style="clear: both"></div>
+				</div>
+
+				<div style="word-wrap: break-word; font-size:10pt;">
+					<% if METAVALUE("Author;lastModifiedBy") <> "" then %>
+					from <span class="ticon">f</span> <a href="<%= QueryWithinUrl( METAVALUE("Author;lastModifiedBy") ) %>">{METAVALUE Author;lastModifiedBy}</a>
+					<% end if %> 
+					<% if Category() <> "" then %>
+					in <a href="<%= CategoryURL(Category())%>">{Category}</a>
+					<% end if %> &bull; {CONTEXT Words="10" Hits="5"}</div>
+				<span style="font-size: smaller;">
+					<a href="{URL}"  id="isys_var_url_{DOCNUM}" style="color: green">{FILENAME}</a>
+				</span>
+				</div>
+			</td>
+			
+			<td class="resultColumnC" valign="top">
+				{Control:Thumbnail} 
+			</td>
+		</tr>
+<!-- ISYS:Result:Footer -->
+	</table>
+</FORM>
 
 {SECTION name="PageSelection"}
 
@@ -296,6 +211,62 @@
 	{Control:DateBar}
 	{Control:ContextCog}
 {CONTENTEND}
+
+
+{CONTENTBEGIN name="LeftPanel"}
+{SECTION name="NavPanel"}
+
+<!-- Refinement Section -->
+	<div id="navigationPanel" style="top: 0px; right: 0px; ">
+		<div id="socialPanelSpacer" name="socialPanelSpacer"></div>
+	
+		<div class="ui vertical menu" style='margin-top: 0px'>
+
+
+		{Control:QueryExpansion Icon="comments outline"}
+
+<!-- ISYS:Ajax:Refinement Initial="true" Refresh="ResultList.ReadyState=&quot;loading&quot;" -->
+		{SECTION name="Source"}
+			{Control:Source}
+		{SECTIONEND}
+<!-- ISYS:Ajax:End -->
+
+		{SECTION name="Categories"}
+			{Control:Categories Icon="puzzle"}
+		{SECTIONEND}
+
+		{SECTION name="MetaData"}
+			{Control:DynamicRefinements }
+		{SECTIONEND}
+
+		{SECTION name="Entities"}
+			{IfEntities}
+				{SECTION name="EntityPeople"}
+					{Control:Entities Type="Person" Caption="People" Visible="True" Icon="users"}
+				{SECTIONEND}
+				{SECTION name="EntityOrganization"}
+					{Control:Entities Type="Organization" Caption="Organizations" Visible="True" Icon="building"}
+				{SECTIONEND}
+				{SECTION name="EntityEmails"}
+					{Control:Entities Type="Email Address" Caption="Emails" Visible="False" Icon="mail outline"}
+				{SECTIONEND}
+				{SECTION name="EntityLocations"}
+					{Control:Entities Type="Location" Caption="Locations" Visible="False" Icon="map"}
+				{SECTIONEND}
+				{SECTION name="EntityWebSites"}
+					{Control:Entities Type="Web Site" Caption="WebSites" Visible="False" Icon="world"}
+				{SECTIONEND}
+			{EndIf}
+		{SECTIONEND}
+
+		{SECTION name="Clusters"}
+			{Control:Clusters}
+		{SECTIONEND}
+		</div>
+	</div>
+{SECTIONEND}
+{CONTENTEND}
+
 
 {CONTENTBEGIN name="SocialPanel"}
 {Control:SocialPanel}

@@ -43,6 +43,10 @@ td.resultsColumnC
 {
 	margin-right: 50px;
 }
+#page_content
+{
+	margin-right: 280px;
+}
 #right_col
 {
 	width: 260px;
@@ -54,10 +58,6 @@ td.resultsColumnC
 	bottom: 200px;
 }
 
-.filterFormA {
-	float: left;
-	/* padding-right: 5px; */
-}
 
 #headerFill {
 	position: absolute;
@@ -310,49 +310,19 @@ img {
 	vertical-align:text-top;
 	text-align:left;
 }
-table.results-table-header
-{
-	width: 100%;
-}
 table.results-table
 {
-	width: 100%;
-}
-.results-table tr:hover {
-	background: yellow;
+	width: 810px;
 }
 .resultColumnB {
-	padding:5px;
-	/* padding-top:5px; */
-	/* padding-bottom:5px; */
-	border: 1px solid #DBE5EE;
-	width: 195px;
+	padding-top:10px;
+	padding-bottom:10px;
+	border-bottom: 1px solid #DBE5EE;
+	width: 600px;
 	overflow: hidden;
 }
-.resultColumnBHeader {
-	padding:5px;
-	border: 1px solid #DBE5EE;
-	width: 195px;
-	overflow: hidden;
-	text-align: left;
-}
-.resultColumnMeta {
-	padding:5px;
-	/* padding-top:5px; */
-	/* padding-bottom:5px; */
-	border: 1px solid #DBE5EE;
-	width: 50px;
-	overflow: hidden;
-	text-align: center;
-}
-.resultColumnMetaHeader {
-	padding:5px;
-	/* padding-top:5px; */
-	/* padding-bottom:5px; */
-	border: 1px solid #DBE5EE;
-	width: 50px;
-	overflow: hidden;
-	text-align: center;
+.resultColumnB div{
+	max-width: 600px;
 }
 .resultColumnC {
 	width:160px;
