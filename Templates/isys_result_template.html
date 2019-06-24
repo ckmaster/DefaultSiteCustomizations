@@ -26,6 +26,22 @@
 	function MakeLanguageFilterURL(Lang)
 		MakeLanguageFilterURL = BaseURL("") & "/search?IW_DATABASE=" & ResultID("") & "&IW_FIELD_IN_ISYSLANG=" & Lang
 	end function
+
+	function MakeSortMetaURL(MetaField)
+		Dim fullUrl
+		fullUrl = Request.ServerVariables("URL")
+		arr = Split(fullUrl, "/")
+		If UBound(arr) = 5 Then
+			character = Left(arr(3),1)
+			If (StrComp(arr(4),"sort")=0) AND (StrComp(character,"-")<>0) Then
+				MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/-" & MetaField & "/sort/"
+			Else
+				MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/" & MetaField & "/sort/"
+			End If
+		Else
+			MakeSortMetaURL=BaseURL("") & "/isysquery/" & ResultID("") & "/" & MetaField & "/sort/"
+		End If
+	end function
 %>
 <script>
 	$(function () {
@@ -192,6 +208,29 @@
 	Did you mean "{SPELLINGTIPS}"?
 	</div>
 	<% end if %>
+
+<table cellpadding="0" border="0" cellspacing="0" class="results-table-header" id="result_header">
+	<tr>
+		<th class="resultColumnMetaHeader">
+			Meta
+		</th>
+		<th class="resultColumnBHeader">
+			<a href='<%= MakeSortMetaURL("Field 1") %>'>Field 1</a>
+		</th>
+		<th class="resultColumnBHeader">
+			<a href='<%= MakeSortMetaURL("Field 2") %>'>Field 2</a>
+		</th>
+		<th class="resultColumnBHeader">
+			<a href='<%= MakeSortMetaURL("Field 3") %>'>Field 3</a>
+		</th>
+		<th class="resultColumnBHeader">
+			<a href='<%= MakeSortMetaURL("Field 4") %>'>Field 4</a>
+		</th>
+		<th class="resultColumnBHeader">
+			<a href='<%= MakeSortMetaURL("Field 5") %>'>Field 5</a>
+		</th>
+	</tr>
+</table>
 
 <FORM>
 	<input type="hidden" name="IW_DATABASE" value="{RESULTID}">
