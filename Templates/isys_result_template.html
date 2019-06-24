@@ -193,44 +193,42 @@
 	</div>
 	<% end if %>
 
-
-<FORM method="POST" action="{BASEURL}/search/" name="SearchForm">
+<FORM>
 	<input type="hidden" name="IW_DATABASE" value="{RESULTID}">
 	<table cellpadding="0" border="0" cellspacing="0" class="results-table">
 		<!-- ISYS:Result:Line -->
 		<tr>
-			<td class="resultColumnB" valign="top" >
-				<div style="min-width: 550px; overflow: hidden">
-				<div style="word-wrap: break-word;">{CONTROL:icon} <a href="{Control:BrowseDocInline}">{TITLE}</a> {BESTBET <font color="red" size="1">best bet!</font>}</div>
-				<div style="clear: both">
-					{SECTION name="docRelevance"}<div class="resultSummary resultStars">{RELEVANCEBAR style="stars"}</div>{SECTIONEND}
-					<div class="resultSummary resultDate"><a href="{DOCDETAILS}">{DATE dd MMM YYYY}</a></div>
-					<div class="resultSummary resultHits">{HITS} hit<%= IfThen(Document.HitCount > 1, "s", "") %></div>
-					<% if METAVALUE("onbasedocpopurl") <> "" then %>
-					<div>
-						<span style="font-size: smaller;">
-							<a href="<%= METAVALUE("onbasedocpopurl")%>" target="_blank" id="isys_var_dp_url_{DOCNUM}" style="color: green">Open Original in OnBase</a>
-						</span>
+			<td class="resultColumnMeta">
+				<a href="{DOCDETAILS}">
+					<div class="ui icon">
+						<i class="info icon"></i>
 					</div>
-					<% end if %>
-					<div style="clear: both"></div>
-				</div>
-
-				<div style="word-wrap: break-word; font-size:10pt;">
-					<% if METAVALUE("Author;lastModifiedBy") <> "" then %>
-					from <span class="ticon">f</span> <a href="<%= QueryWithinUrl( METAVALUE("Author;lastModifiedBy") ) %>">{METAVALUE Author;lastModifiedBy}</a>
-					<% end if %> 
-					<% if Category() <> "" then %>
-					in <a href="<%= CategoryURL(Category())%>">{Category}</a>
-					<% end if %> &bull; {CONTEXT Words="10" Hits="5"}</div>
-				<span style="font-size: smaller;">
-					<a href="{URL}"  id="isys_var_url_{DOCNUM}" style="color: green">{FILENAME}</a>
-				</span>
-				</div>
+				</a>
 			</td>
-			
-			<td class="resultColumnC" valign="top">
-				{Control:Thumbnail} 
+			<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
+				<% if METAVALUE("Field 1") <> "" then %>
+				{METAVALUE Field 1}
+				<% end if %>
+			</td>
+			<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
+				<% if METAVALUE("Field 2") <> "" then %>
+				{METAVALUE Field 2}
+				<% end if %>
+			</td>
+			<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
+				<% if METAVALUE("Field 3") <> "" then %>
+				{METAVALUE Field 3}
+				<% end if %>
+			</td>
+			<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
+				<% if METAVALUE("Field 4") <> "" then %>
+				{METAVALUE Field 4}
+				<% end if %>
+			</td>
+			<td class="resultColumnB" <a href="{Control:BrowseDocInlineContentLink}"></a>
+				<% if METAVALUE("Field 5") <> "" then %>
+				{METAVALUE Field 5}
+				<% end if %>
 			</td>
 		</tr>
 <!-- ISYS:Result:Footer -->
