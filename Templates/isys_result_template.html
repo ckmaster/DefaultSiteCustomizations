@@ -65,6 +65,27 @@
 </script>
 <window onload="updateFilter_text_value()"></window>
 
+<script>
+	$(function update_sort_icon() {
+		var table = document.getElementById("result_header");
+		row = table.rows[0]
+		for (var i = 0, col; col = row.cells[i]; i++) {
+			var compareString = col.innerText.replace(" ", "%20");
+			if (window.location.href.indexOf("sort") > -1) 
+			{
+				if (window.location.href.indexOf("-" + compareString) > -1)
+				{
+					col.innerHTML += '<i class="sort descending icon" style="float: right"></i></a>';
+				}
+				else if (window.location.href.indexOf(compareString) > -1)
+				{
+					col.innerHTML += '<i class="sort ascending icon" style="float: right"></i></a>';
+				}
+			}
+		}	
+	});
+</script>
+
 <!-- ISYS:Result:Header -->
 <script src="{BASEURL}/WebShared/js/isysCalendar.js"></script>
 
