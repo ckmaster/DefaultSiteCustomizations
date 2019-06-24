@@ -43,10 +43,10 @@ td.resultsColumnC
 {
 	margin-right: 50px;
 }
-#page_content
+/* #page_content
 {
 	margin-right: 280px;
-}
+} */
 #right_col
 {
 	width: 260px;
@@ -310,19 +310,43 @@ img {
 	vertical-align:text-top;
 	text-align:left;
 }
+table.results-table-header
+{
+	width: 100%;
+}
 table.results-table
 {
-	width: 810px;
+	width: 100%;
+}
+.results-table tr:hover {
+	background: yellow;
 }
 .resultColumnB {
-	padding-top:10px;
-	padding-bottom:10px;
-	border-bottom: 1px solid #DBE5EE;
-	width: 600px;
+	padding:5px;
+	border: 1px solid #DBE5EE;
+	width: 195px;
 	overflow: hidden;
 }
-.resultColumnB div{
-	max-width: 600px;
+.resultColumnBHeader {
+	padding:5px;
+	border: 1px solid #DBE5EE;
+	width: 195px;
+	overflow: hidden;
+	text-align: left;
+}
+.resultColumnMeta {
+	padding:5px;
+	border: 1px solid #DBE5EE;
+	width: 50px;
+	overflow: hidden;
+	text-align: center;
+}
+.resultColumnMetaHeader {
+	padding:5px;
+	border: 1px solid #DBE5EE;
+	width: 50px;
+	overflow: hidden;
+	text-align: center;
 }
 .resultColumnC {
 	width:160px;
